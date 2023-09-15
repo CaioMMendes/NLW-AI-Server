@@ -43,6 +43,15 @@ export async function uploadVideoRoute(app: FastifyInstance) {
     const pathss = `${__dirname}../../tmp/${fileUploadName}`;
     console.log(pathss);
     unlink(`${__dirname}/../../tmp/${fileUploadName}`, () => {});
-    return reply.send(url);
+    if (!url) {
+      return reply.status(400).send({ error: "Need a vídeo url" });
+    }
+    const video = await prisma.video.create({
+      data: {
+        name: data.filename,
+        path: url,
+      },
+    });
+    return reply.send(video);
   });
 }
