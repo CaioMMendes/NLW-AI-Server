@@ -18,7 +18,7 @@ model Video {
   createdAt     DateTime @default(now())
 }
 
-model Promp {
+model Prompt {
   id       String @id @default(uuid())
   title    String
   template String
