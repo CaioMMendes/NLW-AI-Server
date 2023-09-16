@@ -23,6 +23,8 @@
     "@fastify/multipart": "^7.7.3",
     "@prisma/client": "^5.3.0",
     "fastify": "^4.23.2",
-    "googleapis": "^126.0.1"
+    "googleapis": "^126.0.1",
+    "openai": "^4.7.1",
+    "zod": "^3.22.2"
   }
 }
