@@ -9,9 +9,6 @@
     "start": "node index.js",
     "dev": "tsx watch src/server.ts"
   },
-  "prisma": {
-    "seed": "tsx src/seed.ts"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
