@@ -7,7 +7,7 @@ import fs, { unlink } from "node:fs";
 import { pipeline } from "node:stream";
 import { promisify } from "node:util";
 import { GoogleApis } from "googleapis";
-import { driveUpload } from "../utils/driveUpload";
+// import { driveUpload } from "../utils/driveUpload";
 
 const pump = promisify(pipeline);
 
@@ -39,12 +39,12 @@ export async function uploadVideoRoute(app: FastifyInstance) {
     );
     await pump(data.file, fs.createWriteStream(uploadDestination));
 
-    const url = await driveUpload(fileUploadName);
+    // const url = await driveUpload(fileUploadName);
 
     // unlink(`${__dirname}/../../tmp/${fileUploadName}`, () => {});
-    if (!url) {
-      return reply.status(400).send({ error: "Need a vídeo url" });
-    }
+    // if (!url) {
+    //   return reply.status(400).send({ error: "Need a vídeo url" });
+    // }
     const video = await prisma.video.create({
       data: {
         name: data.filename,

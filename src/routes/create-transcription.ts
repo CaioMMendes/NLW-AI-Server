@@ -1,7 +1,8 @@
+import { pipeline } from "@xenova/transformers";
 import { FastifyInstance } from "fastify";
 import { prisma } from "../lib/prisma";
 import { z } from "zod";
-import { createReadStream } from "node:fs";
+import { createReadStream, unlink } from "node:fs";
 import { openai } from "../lib/openai";
 import path from "node:path";
 
@@ -10,12 +11,15 @@ export async function createTranscriptionRoute(app: FastifyInstance) {
     const paramsSchema = z.object({
       videoId: z.string().uuid(),
     });
+
     const bodySchema = z.object({
       prompt: z.string(),
+      AI: z.string(),
     });
 
     const { videoId } = paramsSchema.parse(req.params);
     const { prompt } = bodySchema.parse(req.body);
+    const { AI } = bodySchema.parse(req.body);
 
     const video = await prisma.video.findUniqueOrThrow({
       where: {
@@ -24,17 +28,32 @@ export async function createTranscriptionRoute(app: FastifyInstance) {
     });
     const videoPath = path.resolve(__dirname, "../../tmp", video.path);
     const audioReadStream = createReadStream(videoPath);
+    let transcription;
+    if (AI === "chatGpt") {
+      const response = await openai.audio.transcriptions.create({
+        file: audioReadStream,
+        model: "whisper-1",
+        language: "pt",
+        response_format: "json",
+        temperature: 0,
+        prompt,
+      });
 
-    const response = await openai.audio.transcriptions.create({
-      file: audioReadStream,
-      model: "whisper-1",
-      language: "pt",
-      response_format: "json",
-      temperature: 0,
-      prompt,
-    });
-
-    const transcription = response.text;
+      transcription = response.text;
+    } else if (AI === "xenova") {
+      const transcribe = await pipeline(
+        "automatic-speech-recognition",
+        "Xenova/whisper-small"
+      );
+      const transcriptionXenova = await transcribe(audioReadStream, {
+        chunk_length_s: 30,
+        stride_length_s: 5,
+        language: "portuguese",
+        task: "transcribe",
+      });
+      transcription = transcriptionXenova.text;
+    }
+    unlink(videoPath, () => {});
     await prisma.video.update({
       where: {
         id: videoId,

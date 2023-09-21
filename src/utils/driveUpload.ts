@@ -6,7 +6,6 @@ export async function driveUpload(name: string) {
   try {
     const privateKey = process.env.PRIVATE_KEY!.replace(/\n/g, "\\n");
 
-    console.log(privateKey);
     const auth = new google.auth.GoogleAuth({
       credentials: {
         client_email: process.env.CLIENT_EMAIL,
@@ -19,15 +18,6 @@ export async function driveUpload(name: string) {
       scopes: ["https://www.googleapis.com/auth/drive"],
     });
 
-    // const auth = new google.auth.JWT(
-    //   process.env.CLIENT_EMAIL,
-    //   undefined,
-    //   process.env.PRIVATE_KEY!.replace(/\n/g, "\n"),
-    //   "https://www.googleapis.com/auth/drive"
-    // );
-    // console.log("⚡", auth);
-    // const g = await auth.authorize();
-    // console.log("asdasda", g);
     const driveService = google.drive({
       version: "v3",
       auth,
@@ -37,7 +27,7 @@ export async function driveUpload(name: string) {
       parents: [process.env.GOOGLE_API_FOLDER_ID!],
     };
     const readDestination = path.resolve(__dirname, "../../tmp", name);
-    console.log(readDestination);
+
     const media = {
       mimeType: "audio/mpeg",
       body: fs.createReadStream(readDestination),
