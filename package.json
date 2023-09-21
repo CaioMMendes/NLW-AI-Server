@@ -10,7 +10,7 @@
     "dev": "tsx watch src/server.ts"
   },
   "prisma": {
-    "seed": "tsx prisma/seed.ts"
+    "seed": "tsx src/seed.ts"
   },
   "keywords": [],
   "author": "",

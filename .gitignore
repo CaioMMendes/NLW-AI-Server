@@ -1,4 +1,4 @@
 node_modules
 .env
 tmp/*
-prisma/seed.ts
+src/seed.ts
