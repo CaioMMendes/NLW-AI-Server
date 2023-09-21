@@ -7,7 +7,7 @@ import fs, { unlink } from "node:fs";
 import { pipeline } from "node:stream";
 import { promisify } from "node:util";
 import { GoogleApis } from "googleapis";
-import { driveUpload } from "../utils/driveUpload";
+// import { driveUpload } from "../utils/driveUpload";
 
 const pump = promisify(pipeline);
 
