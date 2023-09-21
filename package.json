@@ -9,6 +9,9 @@
     "start": "node index.js",
     "dev": "tsx watch src/server.ts"
   },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -23,6 +26,8 @@
     "@fastify/cors": "^8.3.0",
     "@fastify/multipart": "^7.7.3",
     "@prisma/client": "^5.3.0",
+    "@xenova/transformers": "^2.6.0",
+    "ai": "^2.2.13",
     "fastify": "^4.23.2",
     "googleapis": "^126.0.1",
     "openai": "^4.7.1",
