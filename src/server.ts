@@ -15,8 +15,8 @@ app.register(uploadVideoRoute);
 app.register(createTranscriptionRoute);
 app.register(generateAiCompletionRoute);
 
-// const port=process.env.PORT
-app.listen({ port: 3555 }, (err, address) => {
+const port = +process.env.PORT!;
+app.listen({ port }, (err, address) => {
   if (err) {
     console.error(err);
     process.exit(1);
