@@ -10,6 +10,9 @@
     "start": "node index.js",
     "dev": "tsx watch src/server.ts"
   },
+  "engines": {
+    "node": ">=18"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
