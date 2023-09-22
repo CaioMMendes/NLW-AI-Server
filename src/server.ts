@@ -16,7 +16,7 @@ app.register(createTranscriptionRoute);
 app.register(generateAiCompletionRoute);
 
 const port = +process.env.PORT!;
-app.listen({ port }, (err, address) => {
+app.listen({ host: "0.0.0.0", port }, (err, address) => {
   if (err) {
     console.error(err);
     process.exit(1);
