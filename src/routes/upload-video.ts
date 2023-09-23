@@ -42,7 +42,11 @@ export async function uploadVideoRoute(app: FastifyInstance) {
         "../../tmp",
         fileUploadName
       );
-      await pump(data.file, fs.createWriteStream(`/tmp/${fileUploadName}`));
+      if (process.env.NODE_ENV) {
+        await pump(data.file, fs.createWriteStream(uploadDestination));
+      } else {
+        await pump(data.file, fs.createWriteStream(`/tmp/${fileUploadName}`));
+      }
 
       // const url = await driveUpload(fileUploadName);
 

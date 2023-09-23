@@ -8,7 +8,7 @@
     "build": "prisma generate && tsup src",
     "postinstall": "prisma generate",
     "start": "tsx src/server.ts",
-    "dev": "tsx watch src/server.ts"
+    "dev": "set NODE_ENV=dev&& tsx watch src/server.ts"
   },
   "engines": {
     "node": ">=18 <19"

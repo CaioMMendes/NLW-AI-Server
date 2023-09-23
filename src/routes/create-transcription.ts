@@ -27,7 +27,13 @@ export async function createTranscriptionRoute(app: FastifyInstance) {
           id: videoId,
         },
       });
-      const videoPath = path.resolve(__dirname, "../../tmp", video.path);
+      let videoPath;
+      if (process.env.NODE_ENV) {
+        videoPath = path.resolve(__dirname, "../../tmp", video.path);
+      } else {
+        videoPath = path.resolve(`/tmp/${video.path}`);
+      }
+
       const audioReadStream = createReadStream(videoPath);
       let transcription;
       if (AI === "chatGpt") {
@@ -60,7 +66,7 @@ export async function createTranscriptionRoute(app: FastifyInstance) {
           reply.status(500).send({ error: "Erro interno do servidor" });
         }
       }
-      // unlink(videoPath, () => {});
+      unlink(videoPath, () => {});
       await prisma.video.update({
         where: {
           id: videoId,
