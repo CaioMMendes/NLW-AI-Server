@@ -8,67 +8,71 @@ import path from "node:path";
 
 export async function createTranscriptionRoute(app: FastifyInstance) {
   app.post("/videos/:videoId/transcription", async (req, reply) => {
-    const paramsSchema = z.object({
-      videoId: z.string().uuid(),
-    });
-
-    const bodySchema = z.object({
-      prompt: z.string(),
-      AI: z.string(),
-    });
-
-    const { videoId } = paramsSchema.parse(req.params);
-    const { prompt } = bodySchema.parse(req.body);
-    const { AI } = bodySchema.parse(req.body);
-
-    const video = await prisma.video.findUniqueOrThrow({
-      where: {
-        id: videoId,
-      },
-    });
-    const videoPath = path.resolve(__dirname, "../../tmp", video.path);
-    const audioReadStream = createReadStream(videoPath);
-    let transcription;
-    if (AI === "chatGpt") {
-      const response = await openai.audio.transcriptions.create({
-        file: audioReadStream,
-        model: "whisper-1",
-        language: "pt",
-        response_format: "json",
-        temperature: 0,
-        prompt,
+    try {
+      const paramsSchema = z.object({
+        videoId: z.string().uuid(),
       });
 
-      transcription = response.text;
-    } else if (AI === "xenova") {
-      try {
-        const { pipeline } = await import("@xenova/transformers");
-        const transcribe = await pipeline(
-          "automatic-speech-recognition",
-          "Xenova/whisper-small"
-        );
-        const transcriptionXenova = await transcribe(audioReadStream, {
-          chunk_length_s: 30,
-          stride_length_s: 5,
-          language: "portuguese",
-          task: "transcribe",
-        });
-        transcription = transcriptionXenova.text;
-      } catch (error) {
-        console.error("Erro ao importar @xenova/transformers:", error);
-        reply.status(500).send({ error: "Erro interno do servidor" });
-      }
-    }
-    unlink(videoPath, () => {});
-    await prisma.video.update({
-      where: {
-        id: videoId,
-      },
-      data: {
-        transcription,
-      },
-    });
+      const bodySchema = z.object({
+        prompt: z.string(),
+        AI: z.string(),
+      });
 
-    return { transcription };
+      const { videoId } = paramsSchema.parse(req.params);
+      const { prompt } = bodySchema.parse(req.body);
+      const { AI } = bodySchema.parse(req.body);
+
+      const video = await prisma.video.findUniqueOrThrow({
+        where: {
+          id: videoId,
+        },
+      });
+      const videoPath = path.resolve(__dirname, "../../tmp", video.path);
+      const audioReadStream = createReadStream(videoPath);
+      let transcription;
+      if (AI === "chatGpt") {
+        const response = await openai.audio.transcriptions.create({
+          file: audioReadStream,
+          model: "whisper-1",
+          language: "pt",
+          response_format: "json",
+          temperature: 0,
+          prompt,
+        });
+
+        transcription = response.text;
+      } else if (AI === "xenova") {
+        try {
+          const { pipeline } = await import("@xenova/transformers");
+          const transcribe = await pipeline(
+            "automatic-speech-recognition",
+            "Xenova/whisper-small"
+          );
+          const transcriptionXenova = await transcribe(audioReadStream, {
+            chunk_length_s: 30,
+            stride_length_s: 5,
+            language: "portuguese",
+            task: "transcribe",
+          });
+          transcription = transcriptionXenova.text;
+        } catch (error) {
+          console.error("Erro ao importar @xenova/transformers:", error);
+          reply.status(500).send({ error: "Erro interno do servidor" });
+        }
+      }
+      unlink(videoPath, () => {});
+      await prisma.video.update({
+        where: {
+          id: videoId,
+        },
+        data: {
+          transcription,
+        },
+      });
+
+      return { transcription };
+    } catch (error) {
+      console.log(error);
+    }
   });
 }
