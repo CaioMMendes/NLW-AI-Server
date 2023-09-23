@@ -28,11 +28,12 @@ export async function createTranscriptionRoute(app: FastifyInstance) {
         },
       });
       let videoPath;
-      if (process.env.NODE_ENV) {
-        videoPath = path.resolve(__dirname, "../../tmp", video.path);
-      } else {
-        videoPath = path.resolve(`/tmp/${video.path}`);
-      }
+      videoPath = path.resolve(`/tmp/${video.path}`);
+      // if (process.env.NODE_ENV) {
+      //   videoPath = path.resolve(__dirname, "../../tmp", video.path);
+      // } else {
+      //   videoPath = path.resolve(`/tmp/${video.path}`);
+      // }
 
       const audioReadStream = createReadStream(videoPath);
       let transcription;
