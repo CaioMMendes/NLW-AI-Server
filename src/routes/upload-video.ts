@@ -2,6 +2,7 @@ import { FastifyInstance } from "fastify";
 import { prisma } from "../lib/prisma";
 import { fastifyMultipart } from "@fastify/multipart";
 import path from "node:path";
+import os from "node:os";
 import { randomUUID } from "node:crypto";
 import fs, { unlink } from "node:fs";
 import { pipeline } from "node:stream";
@@ -30,7 +31,10 @@ export async function uploadVideoRoute(app: FastifyInstance) {
           .status(400)
           .send({ error: "Invalid input type, please upload a MP3." });
       }
-
+      const temporaryDir = os.tmpdir();
+      const aaa = path.join(process.cwd(), "files", "test.json");
+      console.log(temporaryDir);
+      console.log(aaa);
       const fileBaseName = path.basename(data.filename, extension);
       const fileUploadName = `${fileBaseName}-${randomUUID()}${extension}`;
       const uploadDestination = path.resolve(
@@ -38,7 +42,7 @@ export async function uploadVideoRoute(app: FastifyInstance) {
         "../../tmp",
         fileUploadName
       );
-      await pump(data.file, fs.createWriteStream(uploadDestination));
+      await pump(data.file, fs.createWriteStream(`/tmp/${fileUploadName}`));
 
       // const url = await driveUpload(fileUploadName);
 
