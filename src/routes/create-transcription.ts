@@ -60,7 +60,7 @@ export async function createTranscriptionRoute(app: FastifyInstance) {
           reply.status(500).send({ error: "Erro interno do servidor" });
         }
       }
-      unlink(videoPath, () => {});
+      // unlink(videoPath, () => {});
       await prisma.video.update({
         where: {
           id: videoId,
