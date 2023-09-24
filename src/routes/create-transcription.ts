@@ -19,8 +19,7 @@ export async function createTranscriptionRoute(app: FastifyInstance) {
       });
 
       const { videoId } = paramsSchema.parse(req.params);
-      const { prompt } = bodySchema.parse(req.body);
-      const { AI } = bodySchema.parse(req.body);
+      const { prompt, AI } = bodySchema.parse(req.body);
 
       const video = await prisma.video.findUniqueOrThrow({
         where: {
@@ -28,12 +27,11 @@ export async function createTranscriptionRoute(app: FastifyInstance) {
         },
       });
       let videoPath;
-      videoPath = path.resolve(`/tmp/${video.path}`);
-      // if (process.env.NODE_ENV) {
-      //   videoPath = path.resolve(__dirname, "../../tmp", video.path);
-      // } else {
-      //   videoPath = path.resolve(`/tmp/${video.path}`);
-      // }
+      if (process.env.MODE === "dev") {
+        videoPath = path.resolve(__dirname, "../../tmp", video.path);
+      } else {
+        videoPath = path.resolve(`/tmp/${video.path}`);
+      }
 
       const audioReadStream = createReadStream(videoPath);
       let transcription;

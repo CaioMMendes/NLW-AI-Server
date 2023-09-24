@@ -5,6 +5,7 @@ import { createReadStream } from "node:fs";
 import { streamToResponse, OpenAIStream } from "ai";
 import { openai } from "../lib/openai";
 import path from "node:path";
+import { allowAccess } from "../server";
 
 export async function generateAiCompletionRoute(app: FastifyInstance) {
   app.post("/ai/complete", async (req, reply) => {
@@ -46,7 +47,7 @@ export async function generateAiCompletionRoute(app: FastifyInstance) {
       const stream = OpenAIStream(response);
       streamToResponse(stream, reply.raw, {
         headers: {
-          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Origin": allowAccess!,
           "Access-Control-Allow-Methods": "POST,GET,PUT,DELETE,OPTIONS",
         },
       });

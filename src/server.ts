@@ -7,8 +7,11 @@ import { generateAiCompletionRoute } from "./routes/generate-ai-completion";
 import { fastifyCors } from "@fastify/cors";
 const app = fastify();
 
+export const allowAccess =
+  process.env.MODE === "dev" ? "http://localhost:3000" : process.env.URL_ACCESS;
+
 app.register(fastifyCors, {
-  origin: "*",
+  origin: allowAccess,
 });
 app.register(getAllPromptsRoute);
 app.register(uploadVideoRoute);
