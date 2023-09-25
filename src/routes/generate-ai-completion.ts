@@ -1,10 +1,8 @@
+import { OpenAIStream, streamToResponse } from "ai";
 import { FastifyInstance } from "fastify";
-import { prisma } from "../lib/prisma";
 import { z } from "zod";
-import { createReadStream } from "node:fs";
-import { streamToResponse, OpenAIStream } from "ai";
 import { openai } from "../lib/openai";
-import path from "node:path";
+import { prisma } from "../lib/prisma";
 import { allowAccess } from "../server";
 
 export async function generateAiCompletionRoute(app: FastifyInstance) {
