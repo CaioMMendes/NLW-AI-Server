@@ -77,6 +77,10 @@ export async function createTranscriptionRoute(app: FastifyInstance) {
       return { transcription };
     } catch (error) {
       console.log(error);
+      return {
+        message: "Ocorreu um erro ao tentar gerar a transcrição",
+        status: "error",
+      };
     }
   });
 }
