@@ -1,7 +1,7 @@
 import { OpenAIStream, streamToResponse } from "ai";
 import { FastifyInstance } from "fastify";
 import { z } from "zod";
-import { openai } from "../lib/openai";
+import { openaiApi } from "../lib/openai";
 import { prisma } from "../lib/prisma";
 import { allowAccess } from "../server";
 
@@ -35,12 +35,18 @@ export async function generateAiCompletionRoute(app: FastifyInstance) {
     console.log(promptMessage);
 
     if (AI === "chatGpt") {
-      const response = await openai.chat.completions.create({
+      const response = await openaiApi.createChatCompletion({
         model: "gpt-3.5-turbo-16k",
         temperature,
         messages: [{ role: "user", content: promptMessage }],
         stream: true,
       });
+      // const response = await openai.chat.completions.create({
+      //   model: "gpt-3.5-turbo-16k",
+      //   temperature,
+      //   messages: [{ role: "user", content: promptMessage }],
+      //   stream: true,
+      // });
       console.log("resposne", response);
       const stream = OpenAIStream(response);
       streamToResponse(stream, reply.raw, {

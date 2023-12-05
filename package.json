@@ -33,6 +33,7 @@
     "fastify": "^4.23.2",
     "googleapis": "^126.0.1",
     "openai": "^4.7.1",
+    "openai-edge": "^1.2.2",
     "zod": "^3.22.2"
   }
 }
