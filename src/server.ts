@@ -8,7 +8,7 @@ import { fastifyCors } from "@fastify/cors";
 const app = fastify();
 
 export const allowAccess =
-  process.env.MODE === "dev" ? "http://localhost:3000" : process.env.URL_ACCESS;
+  process.env.MODE === "dev" ? "*" : process.env.URL_ACCESS;
 
 app.register(fastifyCors, {
   origin: allowAccess,
