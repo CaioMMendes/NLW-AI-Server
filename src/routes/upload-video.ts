@@ -24,28 +24,28 @@ export async function uploadVideoRoute(app: FastifyInstance) {
     .post(
       "/videos",
 
-      {
-        schema: {
-          tags: ["videos"],
-          consumes: ["multipart/form-data"],
+      // {
+      //   schema: {
+      //     tags: ["videos"],
+      //     consumes: ["multipart/form-data"],
 
-          body: z.object({
-            file: z.instanceof(File),
-          }),
-          response: {
-            200: z.object({
-              id: z.string(),
-              name: z.string(),
-              path: z.string(),
-              transcription: z.string().nullable(),
-              createdAt: z.date(),
-            }),
-            400: z.object({
-              error: z.string(),
-            }),
-          },
-        },
-      },
+      //     body: z.object({
+      //       file: z.instanceof(File),
+      //     }),
+      //     response: {
+      //       200: z.object({
+      //         id: z.string(),
+      //         name: z.string(),
+      //         path: z.string(),
+      //         transcription: z.string().nullable(),
+      //         createdAt: z.date(),
+      //       }),
+      //       400: z.object({
+      //         error: z.string(),
+      //       }),
+      //     },
+      //   },
+      // },
       //todo Tá bugado o envio de arquivos do fastify-swagger-ui
       // {
       //   schema: {
