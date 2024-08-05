@@ -14,7 +14,7 @@ import {
   ZodTypeProvider,
 } from "fastify-type-provider-zod"
 
-const app = fastify().withTypeProvider<ZodTypeProvider>()
+const app = fastify() /* .withTypeProvider<ZodTypeProvider>() */
 
 app.register(fastifySwagger, {
   swagger: {
@@ -56,4 +56,4 @@ app.listen({ host: "0.0.0.0", port }, (err, address) => {
   console.log(`Server listening at ${address}`)
 })
 
-export default app
+// export default app
