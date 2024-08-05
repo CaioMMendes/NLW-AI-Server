@@ -16,25 +16,25 @@ import {
 
 const app = fastify() /* .withTypeProvider<ZodTypeProvider>() */
 
-app.register(fastifySwagger, {
-  swagger: {
-    consumes: ["application/json", "multipart/form-data"],
-    produces: ["application/json"],
-    info: {
-      title: "AI-Video-Tools",
-      description: "AI Video Tools Server",
-      version: "1.0.0",
-    },
-  },
-  transform: jsonSchemaTransform,
-})
+// app.register(fastifySwagger, {
+//   swagger: {
+//     consumes: ["application/json", "multipart/form-data"],
+//     produces: ["application/json"],
+//     info: {
+//       title: "AI-Video-Tools",
+//       description: "AI Video Tools Server",
+//       version: "1.0.0",
+//     },
+//   },
+//   transform: jsonSchemaTransform,
+// })
 
-app.register(fastifySwaggerUI, {
-  routePrefix: "/docs",
-})
+// app.register(fastifySwaggerUI, {
+//   routePrefix: "/docs",
+// })
 
-app.setValidatorCompiler(validatorCompiler)
-app.setSerializerCompiler(serializerCompiler)
+// app.setValidatorCompiler(validatorCompiler)
+// app.setSerializerCompiler(serializerCompiler)
 
 export const allowAccess =
   process.env.MODE === "dev" ? "*" : process.env.URL_ACCESS
