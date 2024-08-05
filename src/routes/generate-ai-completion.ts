@@ -13,25 +13,25 @@ export async function generateAiCompletionRoute(app: FastifyInstance) {
     .post(
       "/ai/complete",
 
-      {
-        schema: {
-          tags: ["videos"],
-          body: z.object({
-            videoId: z.string().uuid(),
-            prompt: z.string(),
-            temperature: z.number().min(0).max(1).default(0.5),
-            AI: z.string(),
-          }),
-          response: {
-            200: z.object({
-              response: z.string(),
-            }),
-            400: z.object({
-              error: z.string(),
-            }),
-          },
-        },
-      },
+      // {
+      //   schema: {
+      //     tags: ["videos"],
+      //     body: z.object({
+      //       videoId: z.string().uuid(),
+      //       prompt: z.string(),
+      //       temperature: z.number().min(0).max(1).default(0.5),
+      //       AI: z.string(),
+      //     }),
+      //     response: {
+      //       200: z.object({
+      //         response: z.string(),
+      //       }),
+      //       400: z.object({
+      //         error: z.string(),
+      //       }),
+      //     },
+      //   },
+      // },
 
       async (req, reply) => {
         const bodySchema = z.object({

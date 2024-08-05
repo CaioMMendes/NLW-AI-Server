@@ -12,25 +12,25 @@ export async function createTranscriptionRoute(app: FastifyInstance) {
 
     .post(
       "/videos/:videoId/transcription",
-      {
-        schema: {
-          tags: ["videos"],
-          body: z.object({
-            prompt: z.string(),
-            AI: z.string(),
-          }),
-          response: {
-            200: z.object({
-              transcription: z.string().optional(),
-              message: z.string().optional(),
-              status: z.string().optional(),
-            }),
-            500: z.object({
-              error: z.string(),
-            }),
-          },
-        },
-      },
+      // {
+      //   schema: {
+      //     tags: ["videos"],
+      //     body: z.object({
+      //       prompt: z.string(),
+      //       AI: z.string(),
+      //     }),
+      //     response: {
+      //       200: z.object({
+      //         transcription: z.string().optional(),
+      //         message: z.string().optional(),
+      //         status: z.string().optional(),
+      //       }),
+      //       500: z.object({
+      //         error: z.string(),
+      //       }),
+      //     },
+      //   },
+      // },
       async (req, reply) => {
         try {
           const paramsSchema = z.object({

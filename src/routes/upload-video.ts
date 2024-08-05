@@ -6,9 +6,6 @@ import path from "node:path"
 import { pipeline } from "node:stream"
 import { promisify } from "node:util"
 import { prisma } from "../lib/prisma"
-import { ZodTypeProvider } from "fastify-type-provider-zod"
-import { z } from "zod"
-import { content } from "googleapis/build/src/apis/content"
 
 const pump = promisify(pipeline)
 
