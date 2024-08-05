@@ -48,7 +48,7 @@ app.register(createTranscriptionRoute)
 app.register(generateAiCompletionRoute)
 
 const port = process.env.PORT ? +process.env.PORT : undefined
-app.listen({ host: "0.0.0.0", port }, (err, address) => {
+app.listen({ port }, (err, address) => {
   if (err) {
     console.error(err)
     process.exit(1)
