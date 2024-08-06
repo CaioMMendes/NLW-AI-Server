@@ -4,11 +4,11 @@ import { z } from "zod"
 import { openaiApi } from "../lib/openai"
 import { prisma } from "../lib/prisma"
 import { allowAccess } from "../server"
-import { ZodTypeProvider } from "fastify-type-provider-zod"
+// import { ZodTypeProvider } from "fastify-type-provider-zod"
 
 export async function generateAiCompletionRoute(app: FastifyInstance) {
   app
-    .withTypeProvider<ZodTypeProvider>()
+    // .withTypeProvider<ZodTypeProvider>()
 
     .post(
       "/ai/complete",

@@ -4,11 +4,11 @@ import { z } from "zod"
 import { createReadStream, unlink } from "node:fs"
 import { openai } from "../lib/openai"
 import path from "node:path"
-import { ZodTypeProvider } from "fastify-type-provider-zod"
+// import { ZodTypeProvider } from "fastify-type-provider-zod"
 
 export async function createTranscriptionRoute(app: FastifyInstance) {
   app
-    .withTypeProvider<ZodTypeProvider>()
+    // .withTypeProvider<ZodTypeProvider>()
 
     .post(
       "/videos/:videoId/transcription",

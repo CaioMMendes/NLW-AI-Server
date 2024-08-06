@@ -5,14 +5,14 @@ import "dotenv/config"
 import { createTranscriptionRoute } from "./routes/create-transcription"
 import { generateAiCompletionRoute } from "./routes/generate-ai-completion"
 import { fastifyCors } from "@fastify/cors"
-import fastifySwagger from "@fastify/swagger"
-import fastifySwaggerUI from "@fastify/swagger-ui"
-import {
-  serializerCompiler,
-  validatorCompiler,
-  jsonSchemaTransform,
-  ZodTypeProvider,
-} from "fastify-type-provider-zod"
+// import fastifySwagger from "@fastify/swagger"
+// import fastifySwaggerUI from "@fastify/swagger-ui"
+// import {
+//   serializerCompiler,
+//   validatorCompiler,
+//   jsonSchemaTransform,
+//   ZodTypeProvider,
+// } from "fastify-type-provider-zod"
 
 const app = fastify() /* .withTypeProvider<ZodTypeProvider>() */
 
