@@ -58,7 +58,7 @@ app.listen({ port }, (err, address) => {
 })
 
 const start = async () => {
-  const port = process.env.PORT ? +process.env.PORT : undefined
+  const port = 3555
   app.listen({ port }, (err, address) => {
     if (err) {
       console.error(err)
