@@ -14,7 +14,8 @@ import { fastifyCors } from "@fastify/cors"
 //   ZodTypeProvider,
 // } from "fastify-type-provider-zod"
 
-const app = fastify() /* .withTypeProvider<ZodTypeProvider>() */
+const app = fastify({})
+/* .withTypeProvider<ZodTypeProvider>() */
 
 // app.register(fastifySwagger, {
 //   swagger: {
@@ -56,4 +57,17 @@ app.listen({ port }, (err, address) => {
   console.log(`Server listening at ${address}`)
 })
 
-export default app
+const start = async () => {
+  const port = process.env.PORT ? +process.env.PORT : undefined
+  app.listen({ port }, (err, address) => {
+    if (err) {
+      console.error(err)
+      process.exit(1)
+    }
+    console.log(`Server listening at ${address}`)
+  })
+}
+
+start()
+
+// export default app
