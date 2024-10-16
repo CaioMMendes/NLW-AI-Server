@@ -49,26 +49,26 @@ app.register(createTranscriptionRoute)
 app.register(generateAiCompletionRoute)
 
 const port = process.env.PORT ? +process.env.PORT : undefined
-app.listen({ port }, (err, address) => {
-  if (err) {
-    console.error(err)
-    process.exit(1)
-  }
-  console.log(`Server listening at ${address}`)
-})
+// app.listen({ port }, (err, address) => {
+//   if (err) {
+//     console.error(err)
+//     process.exit(1)
+//   }
+//   console.log(`Server listening at ${address}`)
+// })
 
-const start = async () => {
-  const port = 3555
-  app.listen({ port }, (err, address) => {
-    if (err) {
-      console.error(err)
-      process.exit(1)
-    }
-    console.log(`Server listening at ${address}`)
-  })
-}
+// const start = async () => {
+//   const port = 3555
+//   app.listen({ port }, (err, address) => {
+//     if (err) {
+//       console.error(err)
+//       process.exit(1)
+//     }
+//     console.log(`Server listening at ${address}`)
+//   })
+// }
 
-start()
+// start()
 
-module.exports = app
-// export default app
+// module.exports = app
+export default app

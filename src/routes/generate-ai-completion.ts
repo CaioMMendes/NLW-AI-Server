@@ -3,7 +3,7 @@ import { FastifyInstance } from "fastify"
 import { z } from "zod"
 import { openaiApi } from "../lib/openai"
 import { prisma } from "../lib/prisma"
-import { allowAccess } from "../server"
+import { allowAccess } from "../app"
 // import { ZodTypeProvider } from "fastify-type-provider-zod"
 
 export async function generateAiCompletionRoute(app: FastifyInstance) {

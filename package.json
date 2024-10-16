@@ -30,6 +30,7 @@
     "@fastify/swagger": "^8.14.0",
     "@fastify/swagger-ui": "^3.1.0",
     "@prisma/client": "^5.3.0",
+    "@vercel/node": "^3.2.23",
     "@xenova/transformers": "^2.6.0",
     "ai": "^2.2.13",
     "fastify": "^4.23.2",
